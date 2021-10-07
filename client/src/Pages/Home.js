@@ -12,18 +12,18 @@ const history = useHistory();
       <div className='homeDiv'>
           <img src={alakazim} alt="" className="homeImg"/>
           <br/>
-          <form style={{alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+          <form className='homeForm'>
           <input placeholder="Username" type="username"></input>
-          <br/>
+          <br/><br/>
           <input placeholder="Password" type="password"></input>
-          <br/>          
-          <button type='submit' style={{height:25, width: 75}} onClick={handleClick}> Login</button>
+          <br/><br/>          
+          <button className="homeButton" type='submit' onClick={handleClick}> Login</button>
           </form>
       </div>
     )
 
       function handleClick() {
-          history.push('/new');
+          history.push('/backendDisplay');
   }
 
   };

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
+import './styles.css';
 
-function New() {
+function BackendDisplay() {
 
   const [data, setData] = useState([{}])
 
@@ -17,7 +18,7 @@ function New() {
   }, [])
 
   return (
-    <div>
+    <div className="homeDiv">
       {(typeof data.backend === 'undefined') ? (
         <p style={{justifyContent: 'center', display: 'flex'}}>Loading...</p>
       ) : (
@@ -29,6 +30,6 @@ function New() {
   )
 }
 
-export default New
+export default BackendDisplay
 
 

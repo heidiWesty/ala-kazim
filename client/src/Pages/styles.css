@@ -12,3 +12,18 @@
     margin-right: auto;
     width: 500px;
   }
+
+  .homeForm {
+    display: table;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .homeButton {
+    height: 30px; 
+    width: 105px;
+    margin: auto;
+    display: table;
+    background-color: #6f41c5;
+    color: white;
+  }
