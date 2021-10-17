@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Pages/Home';
 import BackendDisplay from './Pages/BackendDisplay';
 
@@ -6,14 +6,14 @@ import BackendDisplay from './Pages/BackendDisplay';
 function Routes() {
   return (
     <Router>
-        <Switch>
+      <Switch>
         <Route exact path="/">
-            <Home/>
-          </Route>
+          <Home />
+        </Route>
         <Route path="/backendDisplay">
-            <BackendDisplay/>
-          </Route>
-        </Switch>
+          <BackendDisplay />
+        </Route>
+      </Switch>
     </Router>
   );
 }

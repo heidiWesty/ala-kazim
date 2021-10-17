@@ -1,4 +1,5 @@
 .homeDiv {
+  background-color: #f5f5dc;
     display: 'flex';
     justify-content: 'center';
     align-items: 'center';
