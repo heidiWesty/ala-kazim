@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Pages/Home';
-import BackendDisplay from './Pages/BackendDisplay';
+import Admin from './Pages/Admin';
 
 
 function Routes() {
@@ -10,8 +10,8 @@ function Routes() {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/backendDisplay">
-          <BackendDisplay />
+        <Route path="/Admin">
+          <Admin />
         </Route>
       </Switch>
     </Router>
