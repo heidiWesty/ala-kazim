@@ -120,7 +120,7 @@ function Admin() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['CMPS_257_01', 'CMPS_257_02', 'CMPS_257_03', 'CMPS_390_01', 'CMPS_390_02'].map((text, index) => (
+          {['CMPS_257_01', 'CMPS_257_02', 'CMPS_257_03', 'CMPS_390_01', 'CMPS_390_02', 'Camera Feed'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <ClassIcon /> : <ClassIcon />}
