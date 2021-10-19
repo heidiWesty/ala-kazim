@@ -18,6 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import ClassIcon from '@material-ui/icons/Class';
 
 const drawerWidth = 240;
 
@@ -94,7 +95,7 @@ function Admin() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Admin Dashboard
+            Attendance Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -119,10 +120,10 @@ function Admin() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['CMPS_257_01', 'CMPS_257_02', 'CMPS_257_03', 'CMPS_390_01', 'CMPS_390_02'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index % 2 === 0 ? <ClassIcon /> : <ClassIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -142,6 +143,8 @@ function Admin() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
+        <h1 className="dashboard-header">Hi, Kazim</h1>
+        <h2 className="dashboard-header2"> Attendance Dashboard for (prop goes here)</h2>
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non

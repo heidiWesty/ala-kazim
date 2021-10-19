@@ -29,7 +29,15 @@
     color: white;
   }
 
-  /* .app-bar{
+  .dashboard-header{
+    margin-left: 750px;
+  }
+
+  .dashboard-header2{
+    margin-left: 615px;
+  }
+
+  /* .app
     background-color: #F5F5DC;
     color: #F5F5DC;
   } */
