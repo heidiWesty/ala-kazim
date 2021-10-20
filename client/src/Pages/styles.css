@@ -30,11 +30,22 @@
   }
 
   .dashboard-header{
-    margin-left: 750px;
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .dashboard-header2{
-    margin-left: 615px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .dashboard-header3{
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .header-container{
+    text-align: center
   }
 
   /* .app

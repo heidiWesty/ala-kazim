@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Pages/Home';
 import Admin from './Pages/Admin';
+import Camview from './Pages/Camview'
 
 
 function Routes() {
@@ -12,6 +13,9 @@ function Routes() {
         </Route>
         <Route path="/Admin">
           <Admin />
+        </Route>
+        <Route path="/Camview">
+          <Camview />
         </Route>
       </Switch>
     </Router>

@@ -19,6 +19,8 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import ClassIcon from '@material-ui/icons/Class';
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import { useHistory } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -67,10 +69,16 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
+// routeChange = () => {
+//   let path = `Camview`;
+//   let history = useHistory();
+//   history.push(path);
+// }
 
 function Admin() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -79,6 +87,8 @@ function Admin() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const history = useHistory();
 
   return (
     <Box style={{ backgroundColor: '#f5f5dc' }} sx={{ display: 'flex' }}>
@@ -121,9 +131,11 @@ function Admin() {
         <Divider />
         <List>
           {['CMPS_257_01', 'CMPS_257_02', 'CMPS_257_03', 'CMPS_390_01', 'CMPS_390_02', 'Camera Feed'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <ClassIcon /> : <ClassIcon />}
+            <ListItem button key={text} onClick={() => history.push("camview")}>
+              <ListItemIcon >
+                {index / 1 === 5 ? <CameraAltIcon /> : <ClassIcon />}
+                {/* // === is the strict equality operator which considers operands of different types to always be different */}
+                {/* {index === 5 ? onClick = { this.routeChange } : console.log('bye')} */}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -143,8 +155,11 @@ function Admin() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <h1 className="dashboard-header">Hi, Kazim</h1>
-        <h2 className="dashboard-header2"> Attendance Dashboard for (prop goes here)</h2>
+        <div className="header-container">
+          <h1 className="dashboard-header">Hi, Kazim</h1>
+          <h2 className="dashboard-header2"> Attendance Dashboard</h2>
+          <h3 className="dashboard-header3"> CMPS_257_01 </h3>
+        </div>
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
@@ -160,17 +175,7 @@ function Admin() {
           sapien faucibus et molestie ac.
         </Typography>
         <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
+
         </Typography>
       </Main>
     </Box >
