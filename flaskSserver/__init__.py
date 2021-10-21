@@ -1,0 +1,1 @@
+#import sys#import importlib#sys.path.append('C:\Coding\ala-kazim-ken\ala-kazim')#importlib.import_module('ala-kazim')#from camera import VideoCamera#from camera import __del__#from camera import get_frame#Yimport importlib#mod = importlib.import_module("camera")
