@@ -48,6 +48,14 @@
     text-align: center
   }
 
+  .camera-feed{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-radius: 8px;
+    
+  }
+
   /* .app
     background-color: #F5F5DC;
     color: #F5F5DC;
