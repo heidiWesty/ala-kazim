@@ -21,8 +21,11 @@ import MailIcon from '@material-ui/icons/Mail';
 import ClassIcon from '@material-ui/icons/Class';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import { useHistory } from 'react-router-dom';
+import Logout from './Components/Logout';
 
 const drawerWidth = 240;
+
+
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -177,6 +180,7 @@ function Admin() {
         <Typography paragraph>
 
         </Typography>
+        <Logout/>
       </Main>
     </Box >
   );
