@@ -66,6 +66,10 @@
     margin-right: auto;
     width: 900px
   }
+
+  .svg_icons {
+    transform: scale(1.8);
+  }
   /* .app
     background-color: #F5F5DC;
     color: #F5F5DC;
