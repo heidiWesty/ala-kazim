@@ -1,7 +1,7 @@
 import React from 'react';
 import { GoogleLogout} from 'react-google-login';
 import { useHistory } from 'react-router-dom';
-
+import clientId from './Login';
 
 function Logout() {
     const history = useHistory();
@@ -16,8 +16,8 @@ function Logout() {
             transform: 'translate(-50%, -50%)'
         }}>
             <GoogleLogout
-                clientId='868066420194-sanvqj0g79q5435pcq0nogol67aq8jk4.apps.googleusercontent.com'
-                buttonText="Logout"
+                clientId={clientId}
+                buttonText="Log out"
                 onLogoutSuccess={onSuccess}
             ></GoogleLogout>
         </div>

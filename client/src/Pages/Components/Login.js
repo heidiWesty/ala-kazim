@@ -2,7 +2,7 @@ import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { useHistory } from 'react-router-dom';
 
-const clientId = 'YOUR_CLIENT_ID.apps.googleusercontent.com';
+export const clientId = '868066420194-sanvqj0g79q5435pcq0nogol67aq8jk4.apps.googleusercontent.com'
 
 function Login() {
     const history = useHistory();
@@ -27,8 +27,9 @@ function Login() {
   return(
     <div>
       <GoogleLogin
-        clientId="868066420194-sanvqj0g79q5435pcq0nogol67aq8jk4.apps.googleusercontent.com"
-        buttonText='Login with Google'
+        style={{fontWeight: 'bold'}}
+        clientId={clientId}
+        buttonText='Sign in with Google'
         onSuccess={onSuccess}
         onFailure={onFailure}
         cookiePolicy={'single_host_origin'}
@@ -41,11 +42,6 @@ function Login() {
 
 const test = {
     email: "heidi.diggs@selu.edu",
-    familyName: "Westenhiser",
-    givenName: "Heidi",
-    googleId: "115531535696032474314",
-    imageUrl: "https://lh3.googleusercontent.com/a-/AOh14GifXXoxOUBXmBZA5xfPDNc8qn8Lvb39T0YfuLM=s96-c",
-    name: "Heidi Westenhiser"
 }
 
 export default Login;
