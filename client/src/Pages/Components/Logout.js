@@ -12,7 +12,7 @@ function Logout() {
 
     return (
         <div style={{
-            position: 'absolute', left: '50%', top: '50%',
+            position: 'absolute', left: '50%', top: '95%',
             transform: 'translate(-50%, -50%)'
         }}>
             <GoogleLogout

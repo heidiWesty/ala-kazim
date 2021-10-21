@@ -60,7 +60,12 @@
   .home-textbox{
     height: 20px;
   }
-
+  .dummy-img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px
+  }
   /* .app
     background-color: #F5F5DC;
     color: #F5F5DC;
