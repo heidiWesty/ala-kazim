@@ -74,3 +74,11 @@
     background-color: #F5F5DC;
     color: #F5F5DC;
   } */
+
+  .customCardStyling {
+    padding: "10px";
+    min-height: "100px";
+    display: "flex";
+    flex-direction: "column";
+    justify-content: "center";
+  }
