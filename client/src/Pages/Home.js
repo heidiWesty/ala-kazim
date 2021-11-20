@@ -71,7 +71,7 @@ export default function Home() {
             <Button variant="primary">Go somewhere</Button>
           </Card.Body>
         </Card>
-        <div style={{ marginRight: 30, marginLeft: 30 }}></div>
+        <div style={{ paddingRight: 50 }}></div>
 
         <Card style={{ width: "18rem" }}>
           <Card.Img
@@ -88,7 +88,7 @@ export default function Home() {
             <Button variant="primary">Go somewhere</Button>
           </Card.Body>
         </Card>
-        <div style={{ marginRight: 30, marginLeft: 30 }}></div>
+        <div style={{ paddingRight: 50 }}></div>
 
         <Card style={{ width: "18rem" }}>
           <Card.Img
