@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Routes from './Routes';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import Routes from "./Routes";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
-import theme from "./assets/theme/theme-rtl"
-
+import theme from "./assets/theme/theme-rtl";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,5 +15,5 @@ ReactDOM.render(
       <Routes />
     </ThemeProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
