@@ -106,7 +106,6 @@ export default function Home() {
           </Card.Body>
         </Card>
       </div>
-      <Login />
     </div>
   );
 }
