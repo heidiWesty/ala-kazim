@@ -92,3 +92,18 @@
     flex-direction: "column";
     justify-content: "center";
   }
+/* 
+  .loginDiv {
+    height: "400px";
+    width: "400px";
+    display: "flex";
+    margin: "auto";
+    margin-top: "250px";
+    margin-bottom: "250px";
+    flex-direction: "column";
+    justify-content: "center";
+    align-items: "center";
+    border-radius: "5px";
+    box-shadow: "10px 10px 15px gray";
+    background-color: "rgba(50, 0, 300, 0.2)";
+  } */
