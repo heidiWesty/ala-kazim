@@ -100,6 +100,7 @@ function Admin() {
   const [tabValue, setTabValue] = useState(0);
   const [currClass, setCurrClass] = useState();
 
+  //Connection object for Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyBfz0vMyGdjKk5ZjFQmDcbTg4zAsEcYDuU",
     authDomain: "ala-kazim-firebase.firebaseapp.com",
@@ -110,11 +111,11 @@ function Admin() {
     appId: "1:48119734702:web:14ea03a55488798fb3a83f",
     measurementId: "G-F7MW1WXRNB"
   };
-
+  //State for the Firebase Configuration and Database Connection
   const [config, setConfig] = useState(initializeApp(firebaseConfig));
   const [database, setDatabase] = useState();
 
-
+  //Create connection to database on page load
   useEffect(() => {
 
     setDatabase(getDatabase(config));
@@ -123,7 +124,7 @@ function Admin() {
     // setCurrClass(result.classes[0]);
     // setData(result);
   }, []);
-
+  //Everytime database changes, reflect it on page
   useEffect(() => {
     if (database) {
       const fireBaseRef = ref(database, '/');
