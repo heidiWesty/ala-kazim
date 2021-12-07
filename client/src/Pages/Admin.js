@@ -12,6 +12,11 @@ import { SimpleBarChart } from "@carbon/charts-react";
 import "@carbon/charts/styles.css";
 import { useHistory } from "react-router-dom";
 import Logout from "./Components/Logout";
+import { borderRadius } from "@mui/system";
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, onValue } from "firebase/database";
 
 let months = [
   {
@@ -95,11 +100,46 @@ function Admin() {
   const [tabValue, setTabValue] = useState(0);
   const [currClass, setCurrClass] = useState();
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyBfz0vMyGdjKk5ZjFQmDcbTg4zAsEcYDuU",
+    authDomain: "ala-kazim-firebase.firebaseapp.com",
+    databaseURL: "https://ala-kazim-firebase-default-rtdb.firebaseio.com",
+    projectId: "ala-kazim-firebase",
+    storageBucket: "ala-kazim-firebase.appspot.com",
+    messagingSenderId: "48119734702",
+    appId: "1:48119734702:web:14ea03a55488798fb3a83f",
+    measurementId: "G-F7MW1WXRNB"
+  };
+
+  const [config, setConfig] = useState(initializeApp(firebaseConfig));
+  const [database, setDatabase] = useState();
+
+
   useEffect(() => {
-    let result = getDummyData();
-    setCurrClass(result.classes[0]);
-    setData(result);
+
+    setDatabase(getDatabase(config));
+
+    // let result = getDummyData();
+    // setCurrClass(result.classes[0]);
+    // setData(result);
   }, []);
+
+  useEffect(() => {
+    if (database) {
+      const fireBaseRef = ref(database, '/');
+      onValue(fireBaseRef, (snapshot) => {
+        const data = snapshot.val();
+        console.log(data);
+        debugger;
+      });
+    }
+  }, [database]);
+
+  const getAttendanceData = async () => {
+
+
+
+  }
 
   const handleSetTabValue = (event, newValue) => {
     setTabValue(newValue);
@@ -216,7 +256,25 @@ function Admin() {
 
   return (
     <Grid container spacing={2} style={{ padding: "50px" }}>
+
       <Grid item xs={2}>
+        <Grid>
+          <Grid item xs={2}>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link underline="hover" color="inherit" href="/">
+                Home
+              </Link>
+              <Link
+                underline="hover"
+                color="inherit"
+                href="/getting-started/installation/"
+              >
+                Previous Page
+              </Link>
+              <Typography color="text.primary">Breadcrumbs</Typography>
+            </Breadcrumbs>
+          </Grid>
+        </Grid>
         <AppBar position="static">
           <Tabs
             orientation="vertical"
@@ -239,11 +297,13 @@ function Admin() {
         <Grid xs={3} item align="center">
           <Card
             style={{
-              padding: "10px",
+              padding: "20px",
               minHeight: "100px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
+              borderRadius: "1rem"
             }}
           >
             <Typography variant="h4">
@@ -252,7 +312,7 @@ function Admin() {
           </Card>
         </Grid>
         <Grid xs={3} item>
-          <Card style={{ padding: "10px", minHeight: "100px" }}>
+          <Card style={{ padding: "10px", minHeight: "100px", boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem", borderRadius: "1rem" }}>
             <Grid xs={12}>
               <Typography variant="h6">Total Number of Students:</Typography>
             </Grid>
@@ -271,7 +331,11 @@ function Admin() {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
+              borderRadius: "1rem"
             }}
+
+
           >
             <Button variant="contained" onClick={addAttendance}>
               Add Attendance
@@ -286,6 +350,8 @@ function Admin() {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
+              borderRadius: "1rem"
             }}
           >
             <Button variant="contained" onClick={editAttendance}>
@@ -294,7 +360,13 @@ function Admin() {
           </Card>
         </Grid>
         <Grid xs={6} item>
-          <Card>
+          <Card style={{
+            marginTop: "20px",
+            boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
+            borderRadius: "0.7rem",
+            padding: "20px"
+
+          }}>
             <SimpleBarChart
               data={getDataForAbscencesChart()}
               options={absenceChartOptions}
@@ -302,7 +374,12 @@ function Admin() {
           </Card>
         </Grid>
         <Grid xs={6} item>
-          <Card>
+          <Card style={{
+            marginTop: "20px",
+            boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
+            borderRadius: "0.7rem",
+            padding: "20px"
+          }}>
             <SimpleBarChart
               data={getDataForPresentChart()}
               options={attendanceChartOptions}
@@ -311,7 +388,7 @@ function Admin() {
         </Grid>
         <Logout />
       </Grid>
-    </Grid>
+    </Grid >
   );
 }
 export default Admin;
