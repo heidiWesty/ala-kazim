@@ -12,6 +12,7 @@ import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import HzSeparator from "./Components/HzSeparator";
+import VtSeparator from './Components/VtSeparator';
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
       <div style={{ position: "relative" }}>
         <img
           src={face}
+          alt=''
           style={{
             height: 450,
             width: "100%",
@@ -47,6 +49,7 @@ export default function Home() {
       </div>
       <br />
       <br />
+      <VtSeparator/>
       <div
         style={{
           display: "flex",
