@@ -11,21 +11,20 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import HzSeparator from "./Components/HzSeparator";
 
 export default function Home() {
   return (
     <div className="homeDiv">
       <Navbar bg="dark" variant="dark">
-        <Container style={{ paddingLeft: 20 }}>
+        <Container style={{ paddingLeft: 25 }}>
           <Navbar.Brand href="home">Home</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="about">About</Nav.Link>
-            <Nav.Link href="attendance">Attendance</Nav.Link>
-            <Nav.Link href="Admin">Admin</Nav.Link>
           </Nav>
         </Container>
         <Nav>
-          <Nav.Link href="UserLogin" style={{ paddingRight: 20 }}>
+          <Nav.Link href="UserLogin" style={{ paddingRight: 25 }}>
             Login
           </Nav.Link>
         </Nav>
@@ -34,14 +33,18 @@ export default function Home() {
         <img
           src={face}
           style={{
-            height: 400,
+            height: 450,
             width: "100%",
             objectFit: "cover",
           }}
         />
         <div className="text-block">
           <p style={{ fontSize: "300%" }}>Ala-Kazim</p>
-          <p>We put the 'AI' in Kazim</p>
+          <p>
+            Using facial recognition to
+            <br />
+            track student attendance.
+          </p>
         </div>
       </div>
       <br />
@@ -53,10 +56,10 @@ export default function Home() {
           alignItems: "center",
           marginLeft: "auto",
           marginRight: "auto",
-          width: 1000,
+          width: 1150,
         }}
       >
-        <Card style={{ width: "18rem" }}>
+        <Card style={{ width: "18rem", boxShadow: "10px 10px 9px grey" }}>
           <Card.Img
             variant="top"
             src={purple}
@@ -71,9 +74,9 @@ export default function Home() {
             <Button variant="primary">Go somewhere</Button>
           </Card.Body>
         </Card>
-        <div style={{ paddingRight: 50 }}></div>
+        <HzSeparator />
 
-        <Card style={{ width: "18rem" }}>
+        <Card style={{ width: "18rem", boxShadow: "10px 10px 9px grey" }}>
           <Card.Img
             variant="top"
             src={datapic}
@@ -88,9 +91,9 @@ export default function Home() {
             <Button variant="primary">Go somewhere</Button>
           </Card.Body>
         </Card>
-        <div style={{ paddingRight: 50 }}></div>
+        <HzSeparator />
 
-        <Card style={{ width: "18rem" }}>
+        <Card style={{ width: "18rem", boxShadow: "10px 10px 9px grey" }}>
           <Card.Img
             variant="top"
             src={graph}
