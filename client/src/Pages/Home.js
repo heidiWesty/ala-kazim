@@ -17,12 +17,10 @@ export default function Home() {
   return (
     <div className="homeDiv">
       <Navbar bg="dark" variant="dark">
-        <Container style={{ paddingLeft: 25 }}>
-          <Navbar.Brand href="home">Home</Navbar.Brand>
+          <Navbar.Brand href="home" style={{paddingLeft: 25}}>Home</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="about">About</Nav.Link>
           </Nav>
-        </Container>
         <Nav>
           <Nav.Link href="UserLogin" style={{ paddingRight: 25 }}>
             Login
