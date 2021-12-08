@@ -1,9 +1,9 @@
 import { useHistory } from "react-router-dom";
 import alakazim from "../Images/Alakazam_1.png";
-import datapic from "../Images/data.jpg";
+import jetsonnano from "../Images/jetsonnano.jpg";
 import face from "../Images/FaceRecognition.png";
-import graph from "../Images/graph.jpg";
-import clock from "../Images/clock.jpg";
+import firebaseimg from "../Images/firebaseimg.jpg";
+import reactimg from "../Images/reactimg.png";
 import "./styles.css";
 import Login from "./Components/Login";
 import Navbar from "react-bootstrap/Navbar";
@@ -57,17 +57,17 @@ export default function Home() {
       </p>
       <div className="homeImgsDiv">
         <div>
-          <img className="homeImgs" src={clock} />
+          <img className="homeImgs" src={reactimg} />
           {/* <h2>React</h2> */}
         </div>
         <HzSeparator />
         <div>
-          <img className="homeImgs" src={graph} />
+          <img className="homeImgs" src={jetsonnano} />
           {/* <h2>Jetson Nano</h2> */}
         </div>
         <HzSeparator />
         <div>
-          <img className="homeImgs" src={datapic} />
+          <img className="homeImgs" src={firebaseimg} />
           {/* <h2 className="center-div">Firebase</h2> */}
         </div>
         {/* <Card style={{ width: "18rem", boxShadow: "10px 10px 9px grey" }}>
