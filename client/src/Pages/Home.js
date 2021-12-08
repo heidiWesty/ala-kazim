@@ -53,16 +53,19 @@ export default function Home() {
       </div>
       <p
         className="center-div"
-        style={{ fontSize: 22, marginTop: -25, textAlign: "center" }}
+        style={{ fontSize: 21, marginTop: -25, textAlign: "center" }}
       >
-        Using Nvidia Jetson Nano, we have developed a simpler way to track
-        student attendance. <br />
-        Some of the technologies used in the creation of this application
+        Along with the Nvidia&reg; Jetson Nano and the implementation of facial
+        recognition,
+        <br />
+        some other technologies used in the creation of this application
         include:
       </p>
       <div className="homeImgsDiv">
         <div>
-          <img className="homeImgs" src={reactimg} />
+          <a href="https://reactjs.org/">
+            <img className="homeImgs" src={reactimg} />
+          </a>
           <VtSeparator />
           <h2 style={{ fontSize: 25 }} className="center-div">
             React
@@ -70,7 +73,9 @@ export default function Home() {
         </div>
         <HzSeparator />
         <div>
-          <img className="homeImgs" src={pythonlogo} />
+          <a href="https://www.python.org/">
+            <img className="homeImgs" src={pythonlogo} />
+          </a>
           <VtSeparator />
           <h2 style={{ fontSize: 25 }} className="center-div">
             Python
@@ -78,7 +83,9 @@ export default function Home() {
         </div>
         <HzSeparator />
         <div>
-          <img className="homeImgs" src={firebaseimg} />
+          <a href="https://firebase.google.com/">
+            <img className="homeImgs" src={firebaseimg} />
+          </a>
           <VtSeparator />
           <h2 style={{ fontSize: 25 }} className="center-div">
             Firebase
