@@ -107,3 +107,24 @@
     box-shadow: "10px 10px 15px gray";
     background-color: "rgba(50, 0, 300, 0.2)";
   } */
+
+.center-div {
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.homeImgs {
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  box-shadow: 10px 10px 9px grey;
+}
+
+.homeImgsDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
