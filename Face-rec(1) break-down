@@ -1,0 +1,44 @@
+imports 
+  - face_recongition
+    * TODO - look into this library to understand how it is used
+
+known_face_encodings 
+  - This is the variable holding the meta data of the face
+
+known_face_names
+  - This is the faces that can be detected
+
+
+Main Loop
+
+1) Grabbing Single Video Frame
+
+
+  First IF Statement - intialized to true by default in variable above
+    1) Find all face locations and face encodings using face_recognition library
+    2) 
+    
+      for loop inside IF
+        1) Compare face encodings known with face encoding on screen and look for match
+        2) Create best_match_index variable to current face on screen with np.argmin on face_distance //Face distance is a method in the face_recongiton library which returns a value telling you how similiar faces are 
+        
+          Nested IF
+            1) Check if the best_match_index variable created matches the known face on screen
+              2) Assign the name of that best match index to a variable
+              3) Get date the student was noticed
+              4) Create csv file
+              
+                Nested WITH
+                  1) open(filename, 'r+') // r+ is the parameter to open a file for both reading and writing, the filename is test.cv and the whole line  with open(filename, 'r+') as f: is 'f'
+                    2) Read the open file
+                    3) See if student's name is in csv
+                    4) Print Name 
+                    5) Else
+                    6) Add name to csv
+   
+   For loop to track face and draw box with name arount it
+        1) Use several cv2 methods to draw rectangle and put face
+        
+   Display image and video frames
+        1) 
+    
