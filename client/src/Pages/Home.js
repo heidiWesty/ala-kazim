@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import alakazim from "../Images/Alakazam_1.png";
-import jetsonnano from "../Images/jetsonnano.jpg";
+import pythonlogo from "../Images/pythonlogo.jpg";
 import face from "../Images/FaceRecognition.png";
 import firebaseimg from "../Images/firebaseimg.jpg";
 import reactimg from "../Images/reactimg.png";
@@ -34,41 +34,55 @@ export default function Home() {
         <img
           src={face}
           style={{
-            height: 425,
+            height: 400,
             width: "100%",
             objectFit: "cover",
           }}
         />
         <div className="text-block">
           <p style={{ fontSize: "300%", fontFamily: "Segoe UI" }}>ALA-KAZIM</p>
-          <p>
-            Using facial recognition <br />
-            to track student attendance.
-          </p>
+          <p>An easier way to track student attendance.</p>
         </div>
       </div>
       <br />
       <br />
       <div className="center-div">
-        <p style={{ fontFamily: "Segoe UI", fontSize: 35 }}>TECHNOLOGIES</p>
+        <p style={{ fontFamily: "Segoe UI", fontSize: 35, marginTop: -10 }}>
+          TECHNOLOGIES
+        </p>
       </div>
-      <p className="center-div" style={{ fontSize: 20 }}>
-        Some of the technologies used in the creation of this application:
+      <p
+        className="center-div"
+        style={{ fontSize: 22, marginTop: -25, textAlign: "center" }}
+      >
+        Using Nvidia Jetson Nano, we have developed a simpler way to track
+        student attendance. <br />
+        Some of the technologies used in the creation of this application
+        include:
       </p>
       <div className="homeImgsDiv">
         <div>
           <img className="homeImgs" src={reactimg} />
-          {/* <h2>React</h2> */}
+          <VtSeparator />
+          <h2 style={{ fontSize: 25 }} className="center-div">
+            React
+          </h2>
         </div>
         <HzSeparator />
         <div>
-          <img className="homeImgs" src={jetsonnano} />
-          {/* <h2>Jetson Nano</h2> */}
+          <img className="homeImgs" src={pythonlogo} />
+          <VtSeparator />
+          <h2 style={{ fontSize: 25 }} className="center-div">
+            Python
+          </h2>
         </div>
         <HzSeparator />
         <div>
           <img className="homeImgs" src={firebaseimg} />
-          {/* <h2 className="center-div">Firebase</h2> */}
+          <VtSeparator />
+          <h2 style={{ fontSize: 25 }} className="center-div">
+            Firebase
+          </h2>
         </div>
         {/* <Card style={{ width: "18rem", boxShadow: "10px 10px 9px grey" }}>
           <Card.Img
