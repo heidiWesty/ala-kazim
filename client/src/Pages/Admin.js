@@ -588,7 +588,9 @@ function Admin() {
             />
           )}
         </Card>
+        <VtSeparator />
       </Grid>
+      <VtSeparator />
       <Logout />
     </Grid>
   );
