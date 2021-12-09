@@ -476,7 +476,7 @@ function Admin() {
   return (
     <Grid container spacing={2} style={{ padding: "30px", minWidth: "100%" }}>
       <Grid item xs={12}>
-        <Breadcrumbs aria-label="breadcrumb">
+        <Breadcrumbs aria-label="breadcrumb" style={{ marginLeft: 35 }}>
           <Link underline="hover" color="inherit" href="/">
             Home
           </Link>
