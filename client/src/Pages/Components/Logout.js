@@ -13,11 +13,12 @@ function Logout() {
   return (
     <div
       style={{
-        position: "absolute",
-        left: "50%",
-        top: "95%",
-        transform: "translate(-50%, -50%)",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
         padding: 20,
+        height: '100%', 
+        width: '100%'
       }}
     >
       <GoogleLogout
