@@ -7,7 +7,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import getDummyData from "../utility/dataGenerator";
-import { Button, Card, Typography } from "@mui/material";
+import { Button, Card, Typography, TextField, ToggleButtonGroup, ToggleButton, FormControl, MenuItem, InputLabel, Select } from "@mui/material";
 import { SimpleBarChart } from "@carbon/charts-react";
 import "@carbon/charts/styles.css";
 import { useHistory } from "react-router-dom";
@@ -16,77 +16,135 @@ import { borderRadius } from "@mui/system";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set, update } from "firebase/database";
 
-let months = [
+
+const monthsForAbscence = [
   {
     group: "Jan",
     month: 1,
-    value: 0,
+    days: 31,
   },
   {
     group: "Feb",
     month: 2,
-    value: 0,
+    days: 28,
   },
   {
     group: "Mar",
     month: 3,
-    value: 0,
+    days: 31,
   },
   {
     group: "Apr",
     month: 4,
-    value: 0,
+    days: 30,
   },
   {
     group: "May",
     month: 5,
-    value: 0,
+    days: 31,
   },
   {
     group: "Jun",
     month: 6,
-    value: 0,
+    days: 30,
   },
   {
     group: "Jul",
     month: 7,
-    value: 0,
+    days: 31,
   },
   {
     group: "Aug",
     month: 8,
-    value: 0,
+    days: 31,
   },
   {
     group: "Sep",
     month: 9,
-    value: 0,
+    days: 30,
   },
   {
     group: "Oct",
     month: 10,
-    value: 0,
+    days: 31,
   },
   {
     group: "Nov",
     month: 11,
-    value: 0,
+    days: 30,
   },
   {
     group: "Dec",
     month: 12,
-    value: 0,
+    days: 31,
   },
 ];
 
-let presence = [
+const monthsForAttendance = [
   {
-    absent: "",
-    present: "",
+    group: "Jan",
+    month: 1,
+    days: 31,
+  },
+  {
+    group: "Feb",
+    month: 2,
+    days: 28,
+  },
+  {
+    group: "Mar",
+    month: 3,
+    days: 31,
+  },
+  {
+    group: "Apr",
+    month: 4,
+    days: 30,
+  },
+  {
+    group: "May",
+    month: 5,
+    days: 31,
+  },
+  {
+    group: "Jun",
+    month: 6,
+    days: 30,
+  },
+  {
+    group: "Jul",
+    month: 7,
+    days: 31,
+  },
+  {
+    group: "Aug",
+    month: 8,
+    days: 31,
+  },
+  {
+    group: "Sep",
+    month: 9,
+    days: 30,
+  },
+  {
+    group: "Oct",
+    month: 10,
+    days: 31,
+  },
+  {
+    group: "Nov",
+    month: 11,
+    days: 30,
+  },
+  {
+    group: "Dec",
+    month: 12,
+    days: 31,
   },
 ];
+//deleted
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -96,7 +154,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function Admin() {
-  const [data, setData] = useState(null);
   const [tabValue, setTabValue] = useState(0);
   const [currClass, setCurrClass] = useState();
 
@@ -114,16 +171,22 @@ function Admin() {
   //State for the Firebase Configuration and Database Connection
   const [config, setConfig] = useState(initializeApp(firebaseConfig));
   const [database, setDatabase] = useState();
+  const [classes, setClasses] = useState();
+  const [students, setStudents] = useState();
+  const [attendance, setAttendance] = useState();
+
+  const [changeStudent, setChangeStudent] = useState("");
+  const [changeDate, setChangeDate] = useState(null);
+
+  const [toggle, setToggle] = useState("add");
+  const [selectedAttendanceRecord, setSelectedAttendanceRecord] = useState(1);
+
 
   //Create connection to database on page load
   useEffect(() => {
-
     setDatabase(getDatabase(config));
-
-    // let result = getDummyData();
-    // setCurrClass(result.classes[0]);
-    // setData(result);
   }, []);
+
   //Everytime database changes, reflect it on page
   useEffect(() => {
     if (database) {
@@ -131,97 +194,147 @@ function Admin() {
       onValue(fireBaseRef, (snapshot) => {
         const data = snapshot.val();
         console.log(data);
-        debugger;
+        setAttendance(data['1ooDq-aMUjHsfd_ksxvldSLKW01aA39x99aqdo7fzSac'].Sheet1);
+        setStudents(data.Students);
+        setClasses(data.Classes);
+        setCurrClass(data.Classes[0]);
       });
     }
   }, [database]);
 
-  const getAttendanceData = async () => {
+  const handleSetTabValue = (event, newValue) => {
+    setTabValue(newValue);
+    setCurrClass(classes[newValue]);
+  };
 
+  const handleNameChange = (e) => {
+    setChangeStudent(e.target.value);
+  };
 
+  const handleDateChange = (e) => {
+    setChangeDate(e.target.value);
+  };
+
+  const handleSelectChange = (e) => {
+    setSelectedAttendanceRecord(e.target.value);
+    if (!attendance) return;
+    setChangeStudent(attendance[e.target.value].Name);
+    setChangeDate(attendance[e.target.value].Date)
 
   }
 
-  const handleSetTabValue = (event, newValue) => {
-    setTabValue(newValue);
-    setCurrClass(data.classes[newValue]);
-  };
+  const handleToggleChange = (e) => {
+    setToggle(e.target.value);
+    if (!attendance) return;
+    if (e.target.value === "edit") {
+      setChangeStudent(attendance[selectedAttendanceRecord].Name);
+      setChangeDate(attendance[selectedAttendanceRecord].Date)
+    }
+    else {
+      setChangeStudent("");
+      setChangeDate("");
+    }
+  }
 
   const getDataForAbscencesChart = () => {
-    months.forEach((data, index) => {
-      months[index].value = getAbsencesForMonth(data.month);
+    //r3kt
+    monthsForAbscence.forEach((data, index) => {
+      monthsForAbscence[index].value = getAbsencesForMonth(data.month);
     });
 
-    return months;
+    return monthsForAbscence;
   };
 
   const getAbsencesForMonth = (requestedMonth) => {
-    if (data == null) return 0;
+    if (attendance == null || students == null) return 0;
+    let attendancesForMonth = 0;
+    students.forEach((student) => {
+      let days = [];
+      attendance.forEach((attendanceRecord) => {
+        //On singular record
+        //Get records month and dat
+        let recordDateObj = new Date(attendanceRecord.Date);
+        let recordMonth = recordDateObj.getMonth() + 1;
+        let recordDay = recordDateObj.getDate();
+        //If that record is for curr month && that day not in day[] and record we are currently checking is the same as student we are checking day for
+        if (recordMonth === requestedMonth && !days.includes(recordDay) && student.name === attendanceRecord.Name) {
+          days.push(recordDay);
+        }
+        //Add to day[]
 
-    let absencesForRequestedMonth = data.attendance.filter(
-      (attendanceRecord) => {
-        let currentYear = new Date().getFullYear();
-        let recordYear = attendanceRecord.date.getFullYear();
-        let recordMonth = attendanceRecord.date.getMonth() + 1;
-        return (
-          requestedMonth === recordMonth &&
-          currentYear === recordYear &&
-          !attendanceRecord.wasPresent &&
-          attendanceRecord.classId === currClass.id
-        );
-      }
-    );
-    return absencesForRequestedMonth.length;
+      });
+      attendancesForMonth += days.length;
+    });
+    return monthsForAbscence[requestedMonth - 1].days * students.length - attendancesForMonth;
   };
 
-  const getDataForPresentChart = () => {
-    months.forEach((data, index) => {
-      months[index].value = getAttendanceForMonth(data.month);
+  const getDataForAttendanceChart = () => {
+    let attendanceData = monthsForAttendance;
+    attendanceData.forEach((data, index) => {
+      attendanceData[index].value = getAttendanceForMonth(data.month);
     });
 
-    return months;
+    return attendanceData;
   };
 
   const getAttendanceForMonth = (requestedMonth) => {
-    if (data == null) return 0;
+    if (attendance == null) return 0;
 
-    let absencesForRequestedMonth = data.attendance.filter(
+    let absencesForRequestedMonth = attendance.filter(
       (attendanceRecord) => {
         let currentYear = new Date().getFullYear();
-        let recordYear = attendanceRecord.date.getFullYear();
-        let recordMonth = attendanceRecord.date.getMonth() + 1;
+        let recordDateObj = new Date(attendanceRecord.Date);
+        let recordYear = recordDateObj.getFullYear();
+        let recordMonth = recordDateObj.getMonth() + 1;
         return (
           requestedMonth === recordMonth &&
-          currentYear === recordYear &&
-          attendanceRecord.wasPresent &&
-          attendanceRecord.classId === currClass.id
+          currentYear === recordYear
         );
       }
     );
     return absencesForRequestedMonth.length;
   };
 
-  const getTotalStudentsForCurrClass = (data, currClass) => {
-    if (data == null || currClass == null) return 0;
+  const getTotalStudentsForCurrClass = () => {
+    if (students == null || currClass == null) return 0;
 
-    let uniqueStudents = [];
-    data.attendance.forEach((record) => {
-      if (
-        !uniqueStudents.includes(record.studentId) &&
-        record.classId === currClass.id
-      ) {
-        uniqueStudents.push(record.studentId);
-      }
-    });
-    return uniqueStudents.length;
+    const studentsInClass = students.filter((student) => {
+      return student.classes.includes(currClass.id); //acceppt value and check array for given value returning true if class exist in array false if it doesn't
+    }).length;
+    return studentsInClass;
   };
 
-  const addAttendance = () => {
-    alert("Adding attendance is still a WIP");
+  const addAttendance = async () => {
+    if (!database || !attendance) return;
+    if (!changeDate || !changeStudent) {
+      alert("No Data to Add");
+      return;
+    }
+    let newRecordId = attendance[attendance.length - 1].ID + 1
+    let newRecord = {
+      Date: changeDate,
+      ID: newRecordId,
+      Name: changeStudent
+    };
+    let data = [...attendance, newRecord];
+    data[0] = null;
+    await set(ref(database, "/1ooDq-aMUjHsfd_ksxvldSLKW01aA39x99aqdo7fzSac/Sheet1"), data);
+    alert("You have successfully added a record.");
   };
 
-  const editAttendance = () => {
-    alert("Editing attendance is still a WIP");
+  const editAttendance = async () => {
+    if (!database || !attendance) return;
+    if (!changeDate || !changeStudent) {
+      alert("No Data to Add");
+      return;
+    }
+    let data = {
+      Date: changeDate,
+      ID: selectedAttendanceRecord,
+      Name: changeStudent
+    }
+    await update(ref(database, "/1ooDq-aMUjHsfd_ksxvldSLKW01aA39x99aqdo7fzSac/Sheet1/" + selectedAttendanceRecord), data);
+    alert("You have successfully added a record.");
   };
 
   const absenceChartOptions = {
@@ -257,35 +370,32 @@ function Admin() {
 
   return (
     <Grid container spacing={2} style={{ padding: "50px" }}>
-
+      <Grid item xs={12}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" href="/">
+            Home
+          </Link>
+          <Link
+            underline="hover"
+            color="inherit"
+            href="/getting-started/installation/"
+          >
+            Previous Page
+          </Link>
+          <Typography color="text.primary">Breadcrumbs</Typography>
+        </Breadcrumbs>
+      </Grid>
       <Grid item xs={2}>
-        <Grid>
-          <Grid item xs={2}>
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link underline="hover" color="inherit" href="/">
-                Home
-              </Link>
-              <Link
-                underline="hover"
-                color="inherit"
-                href="/getting-started/installation/"
-              >
-                Previous Page
-              </Link>
-              <Typography color="text.primary">Breadcrumbs</Typography>
-            </Breadcrumbs>
-          </Grid>
-        </Grid>
         <AppBar position="static">
           <Tabs
             orientation="vertical"
             value={tabValue}
             onChange={handleSetTabValue}
           >
-            {data &&
-              data.classes.map((c) => (
-                <Tab key={Math.random()} label={c.name} />
-              ))}
+            {classes &&
+              classes.map((c) => {
+                return <Tab key={Math.random()} label={c.name} />;
+              })}
           </Tabs>
           <Tab onClick={() => history.push("camview")} label={camView}></Tab>
           {/* <Tabs onClick={() => history.push("camview")} label={camView}>
@@ -319,35 +429,16 @@ function Admin() {
             </Grid>
             <Grid xs={12}>
               <Typography variant="h4">
-                {getTotalStudentsForCurrClass(data, currClass)}
+                {getTotalStudentsForCurrClass()}
               </Typography>
             </Grid>
           </Card>
         </Grid>
-        <Grid xs={3} item align="center">
+        <Grid xs={6} item align="center">
           <Card
             style={{
               padding: "10px",
-              minHeight: "100px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
-              borderRadius: "1rem"
-            }}
-
-
-          >
-            <Button variant="contained" onClick={addAttendance}>
-              Add Attendance
-            </Button>
-          </Card>
-        </Grid>
-        <Grid xs={3} item align="center">
-          <Card
-            style={{
-              padding: "10px",
-              minHeight: "100px",
+              minHeight: "300px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -355,9 +446,62 @@ function Admin() {
               borderRadius: "1rem"
             }}
           >
-            <Button variant="contained" onClick={editAttendance}>
-              Edit Attendance
-            </Button>
+            <Grid container xs={12}>
+              <Grid item xs={12}>
+
+                <Grid item xs={6}>
+                  <ToggleButtonGroup
+                    color="primary"
+                    value={toggle}
+                    exclusive
+                    onChange={handleToggleChange}
+                  >
+                    <ToggleButton value="add">Add</ToggleButton>
+                    <ToggleButton value="edit">Edit</ToggleButton>
+                  </ToggleButtonGroup>
+                </Grid>
+                <Grid item xs={6}>
+                  {attendance && toggle === "edit" &&
+                    <FormControl fullWidth>
+                      <InputLabel id="">Attendance Records</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={selectedAttendanceRecord}
+                        label="Attendance Records"
+                        onChange={handleSelectChange}
+                      >
+                        {attendance.map((attendanceRecord) => {
+                          return <MenuItem value={attendanceRecord.ID}>`${attendanceRecord.Name}-${attendanceRecord.Date}`</MenuItem>;
+                        })}
+                      </Select>
+                    </FormControl>
+                  }
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid item xs={6}>
+                  <FormControl fullWidth>
+                    <TextField id="name" label="Student Name" variant="standard" onChange={handleNameChange} value={changeStudent} />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControl fullWidth>
+                    <TextField id="date" label="Record Date" variant="standard" onChange={handleDateChange} value={changeDate} />
+                  </FormControl>
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid item xs={3}></Grid>
+                <Grid item xs={6}>
+                  <Button variant="contained" onClick={toggle === "add" ? addAttendance : editAttendance} disabled={!changeDate || !changeStudent}>
+                    {toggle === "add" ? "Add Attendance" : "Edit Attendance"}
+                  </Button>
+                </Grid>
+                <Grid item xs={3}></Grid>
+              </Grid>
+            </Grid>
+
           </Card>
         </Grid>
         <Grid xs={6} item>
@@ -368,10 +512,10 @@ function Admin() {
             padding: "20px"
 
           }}>
-            <SimpleBarChart
+            {students && attendance && <SimpleBarChart
               data={getDataForAbscencesChart()}
               options={absenceChartOptions}
-            />
+            />}
           </Card>
         </Grid>
         <Grid xs={6} item>
@@ -381,10 +525,10 @@ function Admin() {
             borderRadius: "0.7rem",
             padding: "20px"
           }}>
-            <SimpleBarChart
-              data={getDataForPresentChart()}
+            {students && attendance && <SimpleBarChart
+              data={getDataForAttendanceChart()}
               options={attendanceChartOptions}
-            />
+            />}
           </Card>
         </Grid>
         <Logout />
