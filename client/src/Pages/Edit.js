@@ -529,7 +529,7 @@ function Admin() {
             style={{
               padding: "40px",
               minHeight: "300px",
-              width: "700px",
+              width: "100%",
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",
