@@ -487,7 +487,7 @@ function Admin() {
         </Breadcrumbs>
       </Grid>
       <Grid item xs={2}>
-        <AppBar position="static">
+        <AppBar position="static" style={{ minWidth: "235px" }}>
           <Typography
             style={{
               textAlign: "center",
@@ -544,10 +544,10 @@ function Admin() {
               borderRadius: "1rem",
             }}
           >
-            <Grid xs={12}>
+            <Grid xs={12} item align="center">
               <Typography variant="h6">Total Number of Students:</Typography>
             </Grid>
-            <Grid xs={12}>
+            <Grid xs={12} item align="center">
               <Typography variant="h4">
                 {getTotalStudentsForCurrClass()}
               </Typography>
