@@ -10,12 +10,12 @@ export default function UserLogin() {
   return (
     <div className="homeDiv">
       <Navbar bg="dark" variant="dark">
-        <Container style={{ paddingLeft: 25 }}>
-          <Navbar.Brand href="/">Home</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="about">About</Nav.Link>
-          </Nav>
-        </Container>
+        <Navbar.Brand style={{ paddingLeft: 25 }} href="/">
+          Home
+        </Navbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link href="about">About</Nav.Link>
+        </Nav>
         <Nav>
           <Nav.Link href="UserLogin" style={{ paddingRight: 25 }}>
             Login

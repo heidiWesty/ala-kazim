@@ -3,6 +3,7 @@ import Home from "./Pages/Home";
 import Admin from "./Pages/Admin";
 import Camview from "./Pages/Camview";
 import UserLogin from "./Pages/UserLogin";
+import Edit from "./Pages/Edit";
 
 function Routes() {
   return (
@@ -19,6 +20,9 @@ function Routes() {
         </Route>
         <Route path="/Camview">
           <Camview />
+        </Route>
+        <Route path="/Edit">
+          <Edit />
         </Route>
       </Switch>
     </Router>

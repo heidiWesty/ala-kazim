@@ -55,7 +55,7 @@ export default function Home() {
         className="center-div"
         style={{ fontSize: 21, marginTop: -25, textAlign: "center" }}
       >
-        Along with the Nvidia&reg; Jetson Nano and the implementation of facial
+        Along with the Nvidia Jetson Nano and the implementation of facial
         recognition,
         <br />
         some other technologies used in the creation of this application

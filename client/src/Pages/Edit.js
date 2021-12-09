@@ -480,10 +480,12 @@ function Admin() {
           <Link underline="hover" color="inherit" href="/">
             Home
           </Link>
-          <Typography color="text.primary">Admin</Typography>
-          <Link underline="hover" color="inherit" href="/Edit">
-            Edit
+          <Link color="inherit" underline="hover" href="Admin">
+            Admin
           </Link>
+          <Typography underline="hover" color="text.primary" href="/Edit">
+            Edit
+          </Typography>
         </Breadcrumbs>
       </Grid>
       <Grid item xs={2}>
@@ -511,85 +513,115 @@ function Admin() {
           {/* <Tab onClick={() => history.push("camview")} label={camView}></Tab> */}
           {/* <Tabs onClick={() => history.push("camview")} label={camView}>
 
-          </Tabs> */}
+        </Tabs> */}
         </AppBar>
       </Grid>
-      <Grid container spacing={1} xs={10} style={{ padding: "17px" }}>
-        <Grid xs={2} align="center"></Grid>
-        <Grid xs={3} item align="center">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          width: "1200px",
+        }}
+      >
+        <Grid xs={6} item align="center">
           <Card
             style={{
-              padding: "20px",
-              minHeight: "150px",
-              maxHeight: "200px",
+              padding: "10px",
+              minHeight: "300px",
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
               justifyContent: "center",
               boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
               borderRadius: "1rem",
             }}
           >
-            <Typography variant="h4">
-              {currClass != null ? currClass.name : "Loading..."}
-            </Typography>
+            <Grid container xs={12}>
+              <Grid item xs={12}>
+                <Grid item xs={6}>
+                  <ToggleButtonGroup
+                    color="primary"
+                    value={toggle}
+                    exclusive
+                    onChange={handleToggleChange}
+                  >
+                    <ToggleButton value="add">Add</ToggleButton>
+                    <ToggleButton value="edit">Edit</ToggleButton>
+                  </ToggleButtonGroup>
+                  <VtSeparator />
+                </Grid>
+                <Grid item xs={6}>
+                  {attendance && toggle === "edit" && (
+                    <FormControl fullWidth>
+                      <VtSeparator />
+                      <InputLabel id="">Attendance Records</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={selectedAttendanceRecord}
+                        label="Attendance Records"
+                        onChange={handleSelectChange}
+                      >
+                        {attendance.map((attendanceRecord) => {
+                          return (
+                            <MenuItem value={attendanceRecord.ID}>
+                              `${attendanceRecord.Name}-${attendanceRecord.Date}
+                              `
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                      <VtSeparator />
+                    </FormControl>
+                  )}
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid item xs={6}>
+                  <FormControl fullWidth>
+                    <TextField
+                      id="name"
+                      label="Student Name"
+                      variant="standard"
+                      onChange={handleNameChange}
+                      value={changeStudent}
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControl fullWidth>
+                    <VtSeparator />
+
+                    <TextField
+                      id="date"
+                      label="Record Date"
+                      variant="standard"
+                      onChange={handleDateChange}
+                      value={changeDate}
+                    />
+                    <VtSeparator />
+                  </FormControl>
+                  <VtSeparator />
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid item xs={3}></Grid>
+                <Grid item xs={6}>
+                  <Button
+                    variant="contained"
+                    onClick={toggle === "add" ? addAttendance : editAttendance}
+                    disabled={!changeDate || !changeStudent}
+                  >
+                    {toggle === "add" ? "Add Attendance" : "Edit Attendance"}
+                  </Button>
+                  <VtSeparator />
+                </Grid>
+                <Grid item xs={3}></Grid>
+              </Grid>
+            </Grid>
           </Card>
         </Grid>
-        <Grid xs={3} item>
-          <Card
-            style={{
-              padding: "10px",
-              minHeight: "150px",
-              maxHeight: "200px",
-              boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
-              borderRadius: "1rem",
-            }}
-          >
-            <Grid xs={12}>
-              <Typography variant="h6">Total Number of Students:</Typography>
-            </Grid>
-            <Grid xs={12}>
-              <Typography variant="h4">
-                {getTotalStudentsForCurrClass()}
-              </Typography>
-            </Grid>
-          </Card>
-        </Grid>
-      </Grid>
-      <Grid xs={6} item>
-        <Card
-          style={{
-            marginTop: "20px",
-            boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
-            borderRadius: "0.7rem",
-            padding: "20px",
-          }}
-        >
-          {students && attendance && (
-            <SimpleBarChart
-              data={getDataForAbscencesChart()}
-              options={absenceChartOptions}
-            />
-          )}
-        </Card>
-      </Grid>
-      <Grid xs={6} item>
-        <Card
-          style={{
-            marginTop: "20px",
-            boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
-            borderRadius: "0.7rem",
-            padding: "20px",
-          }}
-        >
-          {students && attendance && (
-            <SimpleBarChart
-              data={getDataForAttendanceChart()}
-              options={attendanceChartOptions}
-            />
-          )}
-        </Card>
-      </Grid>
-      <Logout />
+      </div>
     </Grid>
   );
 }
