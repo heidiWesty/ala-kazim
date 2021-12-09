@@ -11,6 +11,8 @@ function Login() {
   const onSuccess = (res) => {
     if (res.profileObj.email == test.email) {
       console.log("[Login Success] currentUser:", res.profileObj);
+      const profileURL = res.profileObj.imageUrl;
+      console.log("User Profile Link is:", profileURL);
       history.push("/Admin");
     } else {
       console.log(test.email);
@@ -40,12 +42,13 @@ function Login() {
         style={{ marginTop: "50px" }}
         isSignedIn={false}
       ></GoogleLogin>
+        
     </div>
   );
 }
 
 const test = {
-  email: "heidi.diggs@selu.edu",
+  email: "stephen.duran@selu.edu",
 };
 
 export default Login;
