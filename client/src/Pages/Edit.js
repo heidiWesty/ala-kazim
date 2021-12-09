@@ -489,7 +489,7 @@ function Admin() {
         </Breadcrumbs>
       </Grid>
       <Grid item xs={2}>
-        <AppBar position="static">
+        <AppBar position="static" style={{ width: "235px" }}>
           <Typography
             style={{
               textAlign: "center",
@@ -521,14 +521,15 @@ function Admin() {
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
-          width: "1200px",
+          width: "100%",
         }}
       >
         <Grid xs={6} item align="center">
           <Card
             style={{
-              padding: "10px",
+              padding: "40px",
               minHeight: "300px",
+              width: "100%",
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",

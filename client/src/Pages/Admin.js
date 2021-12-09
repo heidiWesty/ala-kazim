@@ -474,7 +474,7 @@ function Admin() {
   let camView = "Camera View";
 
   return (
-    <Grid container spacing={2} style={{ padding: "30px" }}>
+    <Grid container spacing={2} style={{ padding: "30px", minWidth: "100%" }}>
       <Grid item xs={12}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/">
@@ -487,7 +487,7 @@ function Admin() {
         </Breadcrumbs>
       </Grid>
       <Grid item xs={2}>
-        <AppBar position="static">
+        <AppBar position="static" style={{ width: "235px" }}>
           <Typography
             style={{
               textAlign: "center",
@@ -544,10 +544,10 @@ function Admin() {
               borderRadius: "1rem",
             }}
           >
-            <Grid xs={12}>
+            <Grid xs={12} item align="center" style={{ paddingTop: 30 }}>
               <Typography variant="h6">Total Number of Students:</Typography>
             </Grid>
-            <Grid xs={12}>
+            <Grid xs={12} item align="center">
               <Typography variant="h4">
                 {getTotalStudentsForCurrClass()}
               </Typography>
