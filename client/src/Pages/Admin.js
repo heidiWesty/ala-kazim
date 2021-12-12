@@ -1,177 +1,598 @@
-import React, { useState, useEffect } from 'react'
-import './styles.css';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import ClassIcon from '@material-ui/icons/Class';
-import CameraAltIcon from '@material-ui/icons/CameraAlt';
-import { useHistory } from 'react-router-dom';
-import Logout from './Components/Logout';
-import dummy_data from '../Images/dummy_data.png';
+import React, { useState, useEffect } from "react";
+import "./styles.css";
+import { styled, useTheme } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import getDummyData from "../utility/dataGenerator";
+import {
+  Button,
+  Card,
+  Typography,
+  TextField,
+  ToggleButtonGroup,
+  ToggleButton,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  Select,
+} from "@mui/material";
+import { SimpleBarChart } from "@carbon/charts-react";
+import "@carbon/charts/styles.css";
+import { useHistory } from "react-router-dom";
+import Logout from "./Components/Logout";
+import { borderRadius } from "@mui/system";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue, set, update } from "firebase/database";
+import VtSeparator from "./Components/VtSeparator";
 
-const drawerWidth = 240;
+const monthsForAbscence = [
+  {
+    group: "Jan",
+    month: 1,
+    days: 31,
+  },
+  {
+    group: "Feb",
+    month: 2,
+    days: 28,
+  },
+  {
+    group: "Mar",
+    month: 3,
+    days: 31,
+  },
+  {
+    group: "Apr",
+    month: 4,
+    days: 30,
+  },
+  {
+    group: "May",
+    month: 5,
+    days: 31,
+  },
+  {
+    group: "Jun",
+    month: 6,
+    days: 30,
+  },
+  {
+    group: "Jul",
+    month: 7,
+    days: 31,
+  },
+  {
+    group: "Aug",
+    month: 8,
+    days: 31,
+  },
+  {
+    group: "Sep",
+    month: 9,
+    days: 30,
+  },
+  {
+    group: "Oct",
+    month: 10,
+    days: 31,
+  },
+  {
+    group: "Nov",
+    month: 11,
+    days: 30,
+  },
+  {
+    group: "Dec",
+    month: 12,
+    days: 31,
+  },
+];
 
+const monthsForAttendance = [
+  {
+    group: "Jan",
+    month: 1,
+    days: 31,
+  },
+  {
+    group: "Feb",
+    month: 2,
+    days: 28,
+  },
+  {
+    group: "Mar",
+    month: 3,
+    days: 31,
+  },
+  {
+    group: "Apr",
+    month: 4,
+    days: 30,
+  },
+  {
+    group: "May",
+    month: 5,
+    days: 31,
+  },
+  {
+    group: "Jun",
+    month: 6,
+    days: 30,
+  },
+  {
+    group: "Jul",
+    month: 7,
+    days: 31,
+  },
+  {
+    group: "Aug",
+    month: 8,
+    days: 31,
+  },
+  {
+    group: "Sep",
+    month: 9,
+    days: 30,
+  },
+  {
+    group: "Oct",
+    month: 10,
+    days: 31,
+  },
+  {
+    group: "Nov",
+    month: 11,
+    days: 30,
+  },
+  {
+    group: "Dec",
+    month: 12,
+    days: 31,
+  },
+];
+//deleted
 
+// const January = [
+//   {
+//     numMonth: 1,
+//     numDays: 31,
+//   }
+// ];
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  }),
-);
+// const February = [
+//   {
+//     numMonth: 2,
+//     numDays: 28,
+//   }
+// ];
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
+// const March = [
+//   {
+//     numMonth: 3,
+//     numDays: 31,
+//   }
+// ];
+
+// const April = [
+//   {
+//     numMonth: 4,
+//     numDays: 30,
+//   }
+// ];
+
+// const May = [
+//   {
+//     numMonth: 5,
+//     numDays: 31,
+//   }
+// ];
+
+// const June = [
+//   {
+//     numMonth: 6,
+//     numDays: 30,
+//   }
+// ];
+
+// const July = [
+//   {
+//     numMonth: 7,
+//     numDays: 31,
+//   }
+// ];
+
+// const August = [
+//   {
+//     numMonth: 8,
+//     numDays: 31,
+//   }
+// ];
+
+// const September = [
+//   {
+//     numMonth: 9,
+//     numDays: 30,
+//   }
+// ];
+
+// const October = [
+//   {
+//     numMonth: 10,
+//     numDays: 31,
+//   }
+// ];
+
+// const November = [
+//   {
+//     numMonth: 11,
+//     numDays: 30,
+//   }
+// ];
+
+// const December = [
+//   {
+//     numMonth: 12,
+//     numDays: 31,
+//   }
+// ];
+
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
 }));
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
-
-// routeChange = () => {
-//   let path = `Camview`;
-//   let history = useHistory();
-//   history.push(path);
-// }
 
 function Admin() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [tabValue, setTabValue] = useState(0);
+  const [currClass, setCurrClass] = useState();
 
+  //Connection object for Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyBfz0vMyGdjKk5ZjFQmDcbTg4zAsEcYDuU",
+    authDomain: "ala-kazim-firebase.firebaseapp.com",
+    databaseURL: "https://ala-kazim-firebase-default-rtdb.firebaseio.com",
+    projectId: "ala-kazim-firebase",
+    storageBucket: "ala-kazim-firebase.appspot.com",
+    messagingSenderId: "48119734702",
+    appId: "1:48119734702:web:14ea03a55488798fb3a83f",
+    measurementId: "G-F7MW1WXRNB",
+  };
+  //State for the Firebase Configuration and Database Connection
+  const [config, setConfig] = useState(initializeApp(firebaseConfig));
+  const [database, setDatabase] = useState();
+  const [classes, setClasses] = useState();
+  const [students, setStudents] = useState();
+  const [attendance, setAttendance] = useState();
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const [changeStudent, setChangeStudent] = useState("");
+  const [changeDate, setChangeDate] = useState(null);
+
+  const [toggle, setToggle] = useState("add");
+  const [selectedAttendanceRecord, setSelectedAttendanceRecord] = useState(1);
+
+  //Create connection to database on page load
+  useEffect(() => {
+    setDatabase(getDatabase(config));
+  }, []);
+
+  //Everytime database changes, reflect it on page
+  useEffect(() => {
+    if (database) {
+      const fireBaseRef = ref(database, "/");
+      onValue(fireBaseRef, (snapshot) => {
+        const data = snapshot.val();
+        console.log(data);
+        setAttendance(
+          data["1ooDq-aMUjHsfd_ksxvldSLKW01aA39x99aqdo7fzSac"].Sheet1
+        );
+        setStudents(data.Students);
+        setClasses(data.Classes);
+        setCurrClass(data.Classes[0]);
+      });
+    }
+  }, [database]);
+
+  const handleSetTabValue = (event, newValue) => {
+    setTabValue(newValue);
+    setCurrClass(classes[newValue]);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleNameChange = (e) => {
+    setChangeStudent(e.target.value);
+  };
+
+  const handleDateChange = (e) => {
+    setChangeDate(e.target.value);
+  };
+
+  const handleSelectChange = (e) => {
+    setSelectedAttendanceRecord(e.target.value);
+    if (!attendance) return;
+    setChangeStudent(attendance[e.target.value].Name);
+    setChangeDate(attendance[e.target.value].Date);
+  };
+
+  const handleToggleChange = (e) => {
+    setToggle(e.target.value);
+    if (!attendance) return;
+    if (e.target.value === "edit") {
+      setChangeStudent(attendance[selectedAttendanceRecord].Name);
+      setChangeDate(attendance[selectedAttendanceRecord].Date);
+    } else {
+      setChangeStudent("");
+      setChangeDate("");
+    }
+  };
+
+  const getDataForAbscencesChart = () => {
+    //r3kt
+    monthsForAbscence.forEach((data, index) => {
+      monthsForAbscence[index].value = getAbsencesForMonth(data.month);
+    });
+
+    return monthsForAbscence;
+  };
+
+  const getAbsencesForMonth = (requestedMonth) => {
+    if (attendance == null || students == null) return 0;
+    let attendancesForMonth = 0;
+    students.forEach((student) => {
+      let days = [];
+      attendance.forEach((attendanceRecord) => {
+        //On singular record
+        //Get records month and dat
+        let recordDateObj = new Date(attendanceRecord.Date);
+        let recordMonth = recordDateObj.getMonth() + 1;
+        let recordDay = recordDateObj.getDate();
+        //If that record is for curr month && that day not in day[] and record we are currently checking is the same as student we are checking day for
+        if (
+          recordMonth === requestedMonth &&
+          !days.includes(recordDay) &&
+          student.name === attendanceRecord.Name
+        ) {
+          days.push(recordDay);
+        }
+        //Add to day[]
+      });
+      attendancesForMonth += days.length;
+    });
+    return (
+      monthsForAbscence[requestedMonth - 1].days * students.length -
+      attendancesForMonth
+    );
+  };
+
+  const getDataForAttendanceChart = () => {
+    let attendanceData = monthsForAttendance;
+    attendanceData.forEach((data, index) => {
+      attendanceData[index].value = getAttendanceForMonth(data.month);
+    });
+
+    return attendanceData;
+  };
+
+  const getAttendanceForMonth = (requestedMonth) => {
+    if (attendance == null) return 0;
+
+    let absencesForRequestedMonth = attendance.filter((attendanceRecord) => {
+      let currentYear = new Date().getFullYear();
+      let recordDateObj = new Date(attendanceRecord.Date);
+      let recordYear = recordDateObj.getFullYear();
+      let recordMonth = recordDateObj.getMonth() + 1;
+      return requestedMonth === recordMonth && currentYear === recordYear;
+    });
+    return absencesForRequestedMonth.length;
+  };
+
+  const getTotalStudentsForCurrClass = () => {
+    if (students == null || currClass == null) return 0;
+
+    const studentsInClass = students.filter((student) => {
+      return student.classes.includes(currClass.id); //accept value and check array for given value returning true if class exist in array false if it doesn't
+    }).length;
+    return studentsInClass;
+  };
+
+  const addAttendance = async () => {
+    if (!database || !attendance) return;
+    if (!changeDate || !changeStudent) {
+      alert("No Data to Add");
+      return;
+    }
+    let newRecordId = attendance[attendance.length - 1].ID + 1;
+    let newRecord = {
+      Date: changeDate,
+      ID: newRecordId,
+      Name: changeStudent,
+    };
+    let data = [...attendance, newRecord];
+    data[0] = null;
+    await set(
+      ref(database, "/1ooDq-aMUjHsfd_ksxvldSLKW01aA39x99aqdo7fzSac/Sheet1"),
+      data
+    );
+    alert("You have successfully added a record.");
+  };
+
+  const editAttendance = async () => {
+    if (!database || !attendance) return;
+    if (!changeDate || !changeStudent) {
+      alert("No Data to Add");
+      return;
+    }
+    let data = {
+      Date: changeDate,
+      ID: selectedAttendanceRecord,
+      Name: changeStudent,
+    };
+    await update(
+      ref(
+        database,
+        "/1ooDq-aMUjHsfd_ksxvldSLKW01aA39x99aqdo7fzSac/Sheet1/" +
+          selectedAttendanceRecord
+      ),
+      data
+    );
+    alert("You have successfully added a record.");
+  };
+
+  const absenceChartOptions = {
+    title: "Absences By Month",
+    axes: {
+      left: {
+        mapsTo: "value",
+      },
+      bottom: {
+        mapsTo: "group",
+        scaleType: "labels",
+      },
+    },
+    height: "400px",
+  };
+
+  const attendanceChartOptions = {
+    title: "Attendances By Month",
+    axes: {
+      left: {
+        mapsTo: "value",
+      },
+      bottom: {
+        mapsTo: "group",
+        scaleType: "labels",
+      },
+    },
+    height: "400px",
   };
 
   const history = useHistory();
+  let camView = "Camera View";
 
   return (
-    <Box style={{ backgroundColor: '#f5f5dc' }} sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar style={{ backgroundColor: '#6f41c5' }} position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+    <Grid container spacing={2} style={{ padding: "30px", minWidth: "100%" }}>
+      <Grid item xs={12}>
+        <Breadcrumbs aria-label="breadcrumb" style={{ marginLeft: 35 }}>
+          <Link underline="hover" color="inherit" href="/">
+            Home
+          </Link>
+          <Typography color="text.primary">Admin</Typography>
+          <Link underline="hover" color="inherit" href="/Edit">
+            Edit
+          </Link>
+        </Breadcrumbs>
+      </Grid>
+      <Grid item xs={2}>
+        <AppBar position="static" style={{ width: "235px" }}>
+          <Typography
+            style={{
+              textAlign: "center",
+              marginTop: 15,
+              fontSize: 20,
+              borderBottomColor: "1px solid white",
+            }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Attendance Dashboard
+            Select Course:
           </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-            backgroundColor: '#f5f5dc',
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {['CMPS_257_01', 'CMPS_257_02', 'CMPS_257_03', 'CMPS_390_01', 'CMPS_390_02', 'Camera Feed'].map((text, index) => (
-            <ListItem button key={text} onClick={() => history.push("camview")}>
-              <ListItemIcon >
-                {index / 1 === 5 ? <CameraAltIcon /> : <ClassIcon />}
-                {/* // === is the strict equality operator which considers operands of different types to always be different */}
-                {/* {index === 5 ? onClick = { this.routeChange } : console.log('bye')} */}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        {/* <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List> */}
-      </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-        <div className="header-container">
-          <h1 className="dashboard-header">Hi, Kazim</h1>
-          <h2 className="dashboard-header2"> Attendance Dashboard</h2>
-          <h3 className="dashboard-header3"> CMPS_257_01 </h3>
-        </div>
-        <img src={dummy_data} alt="" className="dummy-img" />
+          <Tabs
+            orientation="vertical"
+            value={tabValue}
+            onChange={handleSetTabValue}
+          >
+            {classes &&
+              classes.map((c) => {
+                return <Tab key={Math.random()} label={c.name} />;
+              })}
+          </Tabs>
+          {/* <Tab onClick={() => history.push("camview")} label={camView}></Tab> */}
+          {/* <Tabs onClick={() => history.push("camview")} label={camView}>
 
-        <Logout/>
-      </Main>
-    </Box >
+          </Tabs> */}
+        </AppBar>
+      </Grid>
+      <Grid container spacing={1} xs={10} style={{ padding: "17px" }}>
+        <Grid xs={2} align="center"></Grid>
+        <Grid xs={3} item align="center">
+          <Card
+            style={{
+              padding: "20px",
+              minHeight: "150px",
+              maxHeight: "200px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
+              borderRadius: "1rem",
+            }}
+          >
+            <Typography variant="h4">
+              {currClass != null ? currClass.name : "Loading..."}
+            </Typography>
+          </Card>
+        </Grid>
+        <Grid xs={3} item>
+          <Card
+            style={{
+              padding: "10px",
+              minHeight: "150px",
+              maxHeight: "200px",
+              boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
+              borderRadius: "1rem",
+            }}
+          >
+            <Grid xs={12} item align="center" style={{ paddingTop: 30 }}>
+              <Typography variant="h6">Total Number of Students:</Typography>
+            </Grid>
+            <Grid xs={12} item align="center">
+              <Typography variant="h4">
+                {getTotalStudentsForCurrClass()}
+              </Typography>
+            </Grid>
+          </Card>
+        </Grid>
+      </Grid>
+      <Grid xs={6} item>
+        <Card
+          style={{
+            marginTop: "20px",
+            boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
+            borderRadius: "0.7rem",
+            padding: "20px",
+          }}
+        >
+          {students && attendance && (
+            <SimpleBarChart
+              data={getDataForAbscencesChart()}
+              options={absenceChartOptions}
+            />
+          )}
+        </Card>
+      </Grid>
+      <Grid xs={6} item>
+        <Card
+          style={{
+            marginTop: "20px",
+            boxShadow: "rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem",
+            borderRadius: "0.7rem",
+            padding: "20px",
+          }}
+        >
+          {students && attendance && (
+            <SimpleBarChart
+              data={getDataForAttendanceChart()}
+              options={attendanceChartOptions}
+            />
+          )}
+        </Card>
+        <VtSeparator />
+      </Grid>
+      <VtSeparator />
+      <Logout />
+    </Grid>
   );
 }
-
-export default Admin
-
-
+export default Admin;

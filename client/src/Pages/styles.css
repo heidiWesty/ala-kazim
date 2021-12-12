@@ -1,10 +1,9 @@
 .homeDiv {
-  background-color: #f5f5dc;
-    display: 'flex';
-    justify-content: 'center';
-    align-items: 'center';
-    padding-top: 250px;
-    padding-bottom: 250px;
+    background-color: #F8F9FA;
+    /* justify-content: 'center';
+    align-items: 'center'; */
+    object-fit: cover;
+
 }
 
 .homeImg {
@@ -12,6 +11,16 @@
     margin-left: auto;
     margin-right: auto;
     width: 500px;
+  }
+
+  .text-block {
+    position: absolute;
+    bottom: 100px;
+    left: 75px;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family:'Segoe UI';
   }
 
   .homeForm {
@@ -66,7 +75,55 @@
     margin-right: auto;
     width: 900px
   }
+
+  .svg_icons {
+    transform: scale(1.8);
+  }
   /* .app
     background-color: #F5F5DC;
     color: #F5F5DC;
   } */
+
+  .customCardStyling {
+    padding: "10px";
+    min-height: "100px";
+    display: "flex";
+    flex-direction: "column";
+    justify-content: "center";
+  }
+/* 
+  .loginDiv {
+    height: "400px";
+    width: "400px";
+    display: "flex";
+    margin: "auto";
+    margin-top: "250px";
+    margin-bottom: "250px";
+    flex-direction: "column";
+    justify-content: "center";
+    align-items: "center";
+    border-radius: "5px";
+    box-shadow: "10px 10px 15px gray";
+    background-color: "rgba(50, 0, 300, 0.2)";
+  } */
+
+.center-div {
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.homeImgs {
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  box-shadow: 10px 10px 9px grey;
+}
+
+.homeImgsDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
